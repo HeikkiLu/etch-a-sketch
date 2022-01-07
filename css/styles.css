@@ -1,0 +1,25 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hero {
+  margin: 5vh 0 5vh;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 1;
+  border: 2px black solid;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+#square {
+  border: 1px #f8f8f8 solid;
+  width: 10px;
+  height: 10px;
+}
