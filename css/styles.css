@@ -1,25 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 body {
+  font-family: "Poppins", sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  margin: 0px;
+  min-height: 100vh;
+  flex: 1;
+  background-color: #151515;
 }
 
-.hero {
-  margin: 5vh 0 5vh;
+.header {
+  height: 72px;
+  color: #ff715b;
+  background-color: #002a32;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  font-size: 32px;
+  font-weight: 900;
 }
 
 .content {
+  color: #ff715b;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slider {
+  width: 400px;
+  height: 15px;
+  -webkit-appearance: none;
+  background: #111;
+  outline: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ff715b;
+  cursor: pointer;
+  box-shadow: -407px 0 0 400px #ff715b85;
+}
+
+.sliderValue {
+  margin-bottom: 16px;
+}
+
+button {
+  background-color: #002a32;
+  color: #ff715b;
+  border: 2px solid #002a32;
+  transition-duration: 0.4s;
+  display: inline-block;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #002a32;
+  background-color: #ff715b;
+}
+
+.palette {
   display: flex;
   flex-wrap: wrap;
-  flex-shrink: 1;
-  border: 2px black solid;
-  max-width: 90vw;
-  max-height: 90vh;
+  background-color: #fbf5f3;
+  border: 2px #ff715b solid;
+  width: max-content;
+  height: max-content;
+  margin: 20px;
 }
 
 #square {
-  border: 1px #f8f8f8 solid;
+  display: flex;
+  border: 1px rgba(141, 141, 141, 0.973) solid;
   width: 10px;
   height: 10px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+  color: #ff715b;
+}
+
+a {
+  text-decoration: none;
+  color: #56a3a6;
 }

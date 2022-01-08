@@ -1,14 +1,15 @@
 let gridSize = 16;
+let rgb = false;
 
 const createGrid = () => {
-  const content = document.querySelector(".content");
+  const content = document.querySelector(".palette");
   while (content.firstChild) {
     content.firstChild.remove();
   }
   for (let i = 1; i <= gridSize; i++) {
     const row = document.createElement("div");
-    row.classList.add(`row${i}`);
-    row.id = "row";
+    row.classList.add(`column${i}`);
+    row.id = "column";
     for (let j = 1; j < gridSize; j++) {
       const square = document.createElement("div");
       square.classList.add(`square${j}`);
@@ -30,18 +31,30 @@ const createControls = () => {
   clearButton.addEventListener("click", () => {
     clearGrid();
   });
-  controls.appendChild(clearButton);
+
+  const rgbButton = document.createElement("button");
+  rgbButton.textContent = "RGB";
+  rgbButton.addEventListener("click", () => {
+    rgb = !rgb;
+  });
 
   const gridSizeSlider = document.createElement("input");
+  const sliderValue = document.createElement("p");
+  sliderValue.classList.add("sliderValue");
   gridSizeSlider.classList.add("slider");
   gridSizeSlider.type = "range";
   gridSizeSlider.min = "16";
-  gridSizeSlider.max = "100";
+  gridSizeSlider.max = "64";
   gridSizeSlider.value = "16";
+  sliderValue.textContent = `Grid size: ${gridSizeSlider.value}x${gridSizeSlider.value}`;
   gridSizeSlider.addEventListener("change", () => {
     sliderEventListener();
+    sliderValue.textContent = `Grid size: ${gridSizeSlider.value}x${gridSizeSlider.value}`;
   });
+  controls.appendChild(sliderValue);
   controls.appendChild(gridSizeSlider);
+  controls.appendChild(rgbButton);
+  controls.appendChild(clearButton);
 };
 
 const sliderEventListener = () => {
@@ -59,8 +72,17 @@ const clearGrid = () => {
 };
 
 const draw = (e) => {
-  e.target.style.backgroundColor = "black";
+  if (!rgb) {
+    e.target.style.backgroundColor = "black";
+  } else {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    e.target.style.backgroundColor = `rgb(
+      ${r},${g},${b}
+    )`;
+  }
 };
 
-createGrid();
 createControls();
+createGrid();
