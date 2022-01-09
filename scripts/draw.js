@@ -1,5 +1,6 @@
 let gridSize = 16;
 let rgb = false;
+let opacityMode = false;
 
 const createGrid = () => {
   const content = document.querySelector(".palette");
@@ -33,9 +34,17 @@ const createControls = () => {
   });
 
   const rgbButton = document.createElement("button");
-  rgbButton.textContent = "RGB";
+  rgbButton.textContent = "RGB mode";
   rgbButton.addEventListener("click", () => {
     rgb = !rgb;
+    opacityMode = false;
+  });
+
+  const opacityButton = document.createElement("button");
+  opacityButton.textContent = "Grayscale mode";
+  opacityButton.addEventListener("click", () => {
+    opacityMode = !opacityMode;
+    rgb = false;
   });
 
   const gridSizeSlider = document.createElement("input");
@@ -54,6 +63,7 @@ const createControls = () => {
   controls.appendChild(sliderValue);
   controls.appendChild(gridSizeSlider);
   controls.appendChild(rgbButton);
+  controls.appendChild(opacityButton);
   controls.appendChild(clearButton);
 };
 
@@ -67,20 +77,33 @@ const sliderEventListener = () => {
 const clearGrid = () => {
   const squares = document.querySelectorAll("#square");
   squares.forEach((square) => {
-    square.style.backgroundColor = "white";
+    square.style.backgroundColor = "#fff";
   });
 };
 
 const draw = (e) => {
-  if (!rgb) {
+  if (!rgb && !opacityMode) {
     e.target.style.backgroundColor = "black";
-  } else {
+  } else if (rgb) {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
     e.target.style.backgroundColor = `rgb(
       ${r},${g},${b}
     )`;
+  } else {
+    if (e.target.style.backgroundColor.match(/rgba/)) {
+      let currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
+      if (currentOpacity <= 0.9) {
+        e.target.style.backgroundColor = `rgba(0, 0, 0, ${
+          currentOpacity + 0.1
+        })`;
+      }
+    } else if (e.target.style.backgroundColor == "rgb(0, 0, 0)") {
+      return;
+    } else {
+      e.target.style.backgroundColor = `rgba(0, 0, 0, 0.1)`;
+    }
   }
 };
 
