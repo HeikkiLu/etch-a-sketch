@@ -84,11 +84,10 @@ button:hover {
 }
 
 .palette {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   border: 2px #ff715b solid;
-  width: max-content;
-  height: max-content;
+  width: 600px;
+  height: 600px;
   margin: 20px;
   background-color: #fff;
 }
@@ -96,8 +95,6 @@ button:hover {
 #square {
   display: flex;
   border: 1px rgba(0, 0, 0, 0.103) solid;
-  width: 10px;
-  height: 10px;
 }
 
 .footer {

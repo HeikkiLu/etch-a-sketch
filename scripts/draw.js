@@ -9,26 +9,23 @@ const rgbButton = document.querySelector(".rgb");
 const grayscaleButton = document.querySelector(".grayscale");
 const eraseButton = document.querySelector(".erase");
 const clearButton = document.querySelector(".clear");
+const content = document.querySelector(".palette");
 
 const createGrid = () => {
-  const content = document.querySelector(".palette");
   while (content.firstChild) {
     content.firstChild.remove();
   }
-  for (let i = 1; i <= gridSize; i++) {
-    const row = document.createElement("div");
-    row.classList.add(`column${i}`);
-    row.id = "column";
-    for (let j = 1; j < gridSize; j++) {
-      const square = document.createElement("div");
-      square.classList.add(`square${j}`);
-      square.id = "square";
-      square.addEventListener("mouseover", (e) => {
-        draw(e);
-      });
-      row.appendChild(square);
-    }
-    content.appendChild(row);
+
+  content.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+  content.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    const square = document.createElement("div");
+    square.id = "square";
+    square.addEventListener("mouseover", (e) => {
+      draw(e);
+    });
+    content.appendChild(square);
   }
 };
 
