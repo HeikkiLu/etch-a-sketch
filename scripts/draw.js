@@ -1,6 +1,14 @@
 let gridSize = 16;
 let rgb = false;
 let opacityMode = false;
+let erase = false;
+
+const sliderValue = document.querySelector(".sliderValue");
+const slider = document.querySelector(".slider");
+const rgbButton = document.querySelector(".rgb");
+const grayscaleButton = document.querySelector(".grayscale");
+const eraseButton = document.querySelector(".erase");
+const clearButton = document.querySelector(".clear");
 
 const createGrid = () => {
   const content = document.querySelector(".palette");
@@ -24,47 +32,34 @@ const createGrid = () => {
   }
 };
 
-const createControls = () => {
-  const controls = document.querySelector(".controls");
-
-  const clearButton = document.createElement("button");
-  clearButton.textContent = "Clear";
+const controlsEventListeners = () => {
   clearButton.addEventListener("click", () => {
     clearGrid();
   });
 
-  const rgbButton = document.createElement("button");
-  rgbButton.textContent = "RGB mode";
   rgbButton.addEventListener("click", () => {
     rgb = !rgb;
     opacityMode = false;
+    erase = false;
   });
 
-  const opacityButton = document.createElement("button");
-  opacityButton.textContent = "Grayscale mode";
-  opacityButton.addEventListener("click", () => {
+  grayscaleButton.addEventListener("click", () => {
     opacityMode = !opacityMode;
     rgb = false;
+    erase = false;
   });
 
-  const gridSizeSlider = document.createElement("input");
-  const sliderValue = document.createElement("p");
-  sliderValue.classList.add("sliderValue");
-  gridSizeSlider.classList.add("slider");
-  gridSizeSlider.type = "range";
-  gridSizeSlider.min = "16";
-  gridSizeSlider.max = "64";
-  gridSizeSlider.value = "16";
-  sliderValue.textContent = `Grid size: ${gridSizeSlider.value}x${gridSizeSlider.value}`;
-  gridSizeSlider.addEventListener("change", () => {
-    sliderEventListener();
-    sliderValue.textContent = `Grid size: ${gridSizeSlider.value}x${gridSizeSlider.value}`;
+  eraseButton.addEventListener("click", () => {
+    erase = !erase;
+    rgb = false;
+    opacityMode = false;
   });
-  controls.appendChild(sliderValue);
-  controls.appendChild(gridSizeSlider);
-  controls.appendChild(rgbButton);
-  controls.appendChild(opacityButton);
-  controls.appendChild(clearButton);
+
+  sliderValue.textContent = `Grid size: ${slider.value}x${slider.value}`;
+  slider.addEventListener("change", () => {
+    sliderEventListener();
+    sliderValue.textContent = `Grid size: ${slider.value}x${slider.value}`;
+  });
 };
 
 const sliderEventListener = () => {
@@ -82,16 +77,16 @@ const clearGrid = () => {
 };
 
 const draw = (e) => {
-  if (!rgb && !opacityMode) {
-    e.target.style.backgroundColor = "black";
-  } else if (rgb) {
+  if (erase && !rgb && !opacityMode) {
+    e.target.style.backgroundColor = "#fff";
+  } else if (rgb && !opacityMode && !erase) {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
     e.target.style.backgroundColor = `rgb(
       ${r},${g},${b}
     )`;
-  } else {
+  } else if (opacityMode && !rgb && !erase) {
     if (e.target.style.backgroundColor.match(/rgba/)) {
       let currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
       if (currentOpacity <= 0.9) {
@@ -104,8 +99,10 @@ const draw = (e) => {
     } else {
       e.target.style.backgroundColor = `rgba(0, 0, 0, 0.1)`;
     }
+  } else {
+    e.target.style.backgroundColor = "black";
   }
 };
 
-createControls();
+controlsEventListeners();
 createGrid();
