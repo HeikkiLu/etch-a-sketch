@@ -79,6 +79,10 @@ button:hover {
   background-color: #ff715b;
 }
 
+#active {
+  border: 1px #ff715b solid;
+}
+
 .palette {
   display: flex;
   flex-wrap: wrap;

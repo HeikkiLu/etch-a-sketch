@@ -41,18 +41,21 @@ const controlsEventListeners = () => {
     rgb = !rgb;
     opacityMode = false;
     erase = false;
+    buttonActive();
   });
 
   grayscaleButton.addEventListener("click", () => {
     opacityMode = !opacityMode;
     rgb = false;
     erase = false;
+    buttonActive();
   });
 
   eraseButton.addEventListener("click", () => {
     erase = !erase;
     rgb = false;
     opacityMode = false;
+    buttonActive();
   });
 
   sliderValue.textContent = `Grid size: ${slider.value}x${slider.value}`;
@@ -102,6 +105,12 @@ const draw = (e) => {
   } else {
     e.target.style.backgroundColor = "black";
   }
+};
+
+const buttonActive = () => {
+  rgb ? (rgbButton.id = "active") : (rgbButton.id = null);
+  opacityMode ? (grayscaleButton.id = "active") : (grayscaleButton.id = null);
+  erase ? (eraseButton.id = "active") : (eraseButton.id = null);
 };
 
 controlsEventListeners();
